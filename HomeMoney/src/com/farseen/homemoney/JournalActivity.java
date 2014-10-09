@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
 
+import com.farseen.homemoney.data.HomeMoneyDbAdapter;
+
 public class JournalActivity extends Activity {
 	ListView listView;
+	private HomeMoneyDbAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_journal_actvity);
+		adapter = new HomeMoneyDbAdapter(this);
+		adapter.open();
 	}
 
 	@Override

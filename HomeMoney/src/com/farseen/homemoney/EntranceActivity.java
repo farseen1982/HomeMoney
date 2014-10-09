@@ -8,11 +8,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.farseen.homemoney.data.HomeMoneyDbAdapter;
+
 public class EntranceActivity extends Activity {
 	private OnClickListener btnListener;
 	private Button btnEntr;
 	private Button btnList;
 	private Button btnMember;
+	private HomeMoneyDbAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,9 @@ public class EntranceActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		initListener();
 		setListener();
+		adapter = new HomeMoneyDbAdapter(this);
+		adapter.open();
+		
 	}
 
 	@Override
