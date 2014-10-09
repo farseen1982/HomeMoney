@@ -71,8 +71,8 @@ public class HomeMoneyDbAdapter {
 		initialValues.put(KEY_AMOUNT, j.getAmount());
 		initialValues.put(KEY_MEMBER, j.getMember());
 		initialValues.put(KEY_DATE, j.getDateString());
-		initialValues.put(this.KEY_COMMENT, j.getComment());
-		initialValues.put(this.KEY_TYPE, j.getType());
+		initialValues.put(KEY_COMMENT, j.getComment());
+		initialValues.put(KEY_TYPE, j.getType());
 		Calendar calendar = Calendar.getInstance();
 		String created = calendar.get(Calendar.YEAR) + ""
 				+ calendar.get(Calendar.MONTH) + ""
