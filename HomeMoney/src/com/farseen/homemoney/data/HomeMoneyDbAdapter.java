@@ -3,12 +3,15 @@ package com.farseen.homemoney.data;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.farseen.homemoney.HomeMoneyConst;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class HomeMoneyDbAdapter {
 	/*
@@ -28,7 +31,7 @@ public class HomeMoneyDbAdapter {
 	private static final String DATABASE_CREATE = "create table journal(_id integer primary key autoincrement, "
 			+ "amount real not null, date text not null, member text not null, comment text not null, type text not null);";
 
-	private static final String DATABASE_NAME = "database";
+	private static final String DATABASE_NAME = "HOME_MONEY_DB";
 	private static final String DATABASE_TABLE = "journal";
 	private static final int DATABASE_VERSION = 1;
 
@@ -47,7 +50,7 @@ public class HomeMoneyDbAdapter {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("DROP TABLE IF EXISTS diary");
+			db.execSQL("DROP TABLE IF EXISTS journal");
 			onCreate(db);
 		}
 	}
@@ -59,6 +62,7 @@ public class HomeMoneyDbAdapter {
 	public HomeMoneyDbAdapter open() throws SQLException {
 		mDbHelper = new DatabaseHelper(mCtx);
 		mDb = mDbHelper.getWritableDatabase();
+		Log.v(HomeMoneyConst.TAG, mDb.toString());
 		return this;
 	}
 
@@ -121,6 +125,7 @@ public class HomeMoneyDbAdapter {
 				+ calendar.get(Calendar.DAY_OF_MONTH) + " "
 				+ calendar.get(Calendar.HOUR_OF_DAY) + " "
 				+ calendar.get(Calendar.MINUTE) + " ";
+		
 		return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + j.getId(), null) > 0;
 	}
 
