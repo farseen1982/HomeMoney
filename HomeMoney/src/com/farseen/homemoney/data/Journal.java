@@ -74,4 +74,12 @@ public class Journal {
 		this.type = type;
 	}
 
+	@Override
+	public String toString() {
+		String result;
+		result = this.id + "/" + String.valueOf(this.amount) + "/"
+				+ date.toString() + "/" + member + "/" + comment + "/" + type;
+		return result;
+	}
+
 }

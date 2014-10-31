@@ -11,7 +11,7 @@
         android:text="@string/btn_record_entry" />
 
     <Button
-        android:id="@+id/btn_list"
+        android:id="@+id/btn_cancel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_show_list" />

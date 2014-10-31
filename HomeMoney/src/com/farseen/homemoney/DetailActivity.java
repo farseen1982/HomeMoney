@@ -1,5 +1,7 @@
 package com.farseen.homemoney;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,17 +11,24 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.farseen.homemoney.data.HomeMoneyDbAdapter;
+import com.farseen.homemoney.data.Journal;
+
 public class DetailActivity extends Activity {
 	OnClickListener btnHandeler;
 	Button btnSave;
 	Button btnCancal;
 	Button btnShowList;
+	HomeMoneyDbAdapter dbAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 		setListener();
+		dbAdapter = new HomeMoneyDbAdapter(this);
+		dbAdapter.open();
+		
 	}
 
 	@Override
@@ -44,6 +53,8 @@ public class DetailActivity extends Activity {
 		};
 		btnShowList = (Button) this.findViewById(R.id.btn_journal);
 		btnShowList.setOnClickListener(btnHandeler);
+		btnSave = (Button)this.findViewById(R.id.btn_entry);
+		btnSave.setOnClickListener(btnHandeler);
 
 	}
 
@@ -54,9 +65,17 @@ public class DetailActivity extends Activity {
 	}
 
 	private void insertJournal() {
-		EditText date = (EditText)this.findViewById(R.id.edit_date);
-		EditText amount = (EditText)this.findViewById(R.id.edit_exp);
-		EditText member = (EditText)this.findViewById(R.id.edit_member);
+		EditText date_s = (EditText)this.findViewById(R.id.edit_date);
+		EditText amount_s = (EditText)this.findViewById(R.id.edit_exp);
+		EditText member_s = (EditText)this.findViewById(R.id.edit_member);
+		EditText comment_s = (EditText)this.findViewById(R.id.edit_commet);
+		float amount = Float.parseFloat(amount_s.getText().toString());
+		Date date = new Date(date_s.getText().toString());
+		String member = member_s.getText().toString();
+		String comment = comment_s.getText().toString();
+		Journal newJournal = new Journal(0, amount, date, member , comment, null);
+		dbAdapter.insertJournal(newJournal);
+		
 
 	}
 

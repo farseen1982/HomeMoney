@@ -29,7 +29,7 @@ public class HomeMoneyDbAdapter {
 	private SQLiteDatabase mDb;
 
 	private static final String DATABASE_CREATE = "create table journal(_id integer primary key autoincrement, "
-			+ "amount real not null, date text not null, member text not null, comment text not null, type text not null);";
+			+ "amount real not null, date text, member text , comment text, type text);";
 
 	private static final String DATABASE_NAME = "HOME_MONEY_DB";
 	private static final String DATABASE_TABLE = "journal";
@@ -84,7 +84,9 @@ public class HomeMoneyDbAdapter {
 				+ calendar.get(Calendar.HOUR_OF_DAY) + ""
 				+ calendar.get(Calendar.MINUTE) + "";
 
-		return mDb.insert(DATABASE_TABLE, null, initialValues);
+		long result = mDb.insert(DATABASE_TABLE, null, initialValues);
+		Log.v(HomeMoneyConst.TAG, String.valueOf(result));
+		return result;
 	}
 
 	public boolean deleteJournal(Journal j) {
@@ -95,15 +97,16 @@ public class HomeMoneyDbAdapter {
 	public Cursor getAllJournals() {
 
 		return mDb.query(DATABASE_TABLE, new String[] { KEY_ROWID, KEY_AMOUNT,
-				KEY_DATE, KEY_MEMBER, KEY_COMMENT, KEY_TYPE }, null, null, null, null, null);
+				KEY_DATE, KEY_MEMBER, KEY_COMMENT, KEY_TYPE }, null, null,
+				null, null, null);
 	}
 
 	public Cursor getJournal(long rowId) throws SQLException {
 
-		Cursor mCursor =
-		mDb.query(true, DATABASE_TABLE, new String[] { KEY_ROWID, KEY_AMOUNT,
-				KEY_MEMBER, KEY_DATE, KEY_COMMENT, KEY_TYPE }, KEY_ROWID + "=" + rowId, null, null,
-				null, null, null);
+		Cursor mCursor = mDb.query(true, DATABASE_TABLE, new String[] {
+				KEY_ROWID, KEY_AMOUNT, KEY_MEMBER, KEY_DATE, KEY_COMMENT,
+				KEY_TYPE }, KEY_ROWID + "=" + rowId, null, null, null, null,
+				null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
@@ -111,7 +114,7 @@ public class HomeMoneyDbAdapter {
 
 	}
 
-	public boolean updateJournal( Journal j) {
+	public boolean updateJournal(Journal j) {
 		ContentValues args = new ContentValues();
 		args.put(KEY_AMOUNT, j.getAmount());
 		args.put(KEY_MEMBER, j.getMember());
@@ -125,8 +128,9 @@ public class HomeMoneyDbAdapter {
 				+ calendar.get(Calendar.DAY_OF_MONTH) + " "
 				+ calendar.get(Calendar.HOUR_OF_DAY) + " "
 				+ calendar.get(Calendar.MINUTE) + " ";
-		
-		return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + j.getId(), null) > 0;
+
+		return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + j.getId(),
+				null) > 0;
 	}
 
 }

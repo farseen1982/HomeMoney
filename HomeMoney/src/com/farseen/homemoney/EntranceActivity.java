@@ -48,7 +48,7 @@ public class EntranceActivity extends Activity {
 				if (id == R.id.btn_entry){
 					navAct = DetailActivity.class;
 				}
-				if (id == R.id.btn_list){
+				if (id == R.id.btn_cancel){
 					navAct = JournalActivity.class; 
 				}
 				if (id == R.id.btn_journal) {
@@ -66,7 +66,7 @@ public class EntranceActivity extends Activity {
 
 	private void setListener() {
 		btnEntr = (Button) this.findViewById(R.id.btn_entry);
-		btnList = (Button) this.findViewById(R.id.btn_list);
+		btnList = (Button) this.findViewById(R.id.btn_cancel);
 		btnMember = (Button) this.findViewById(R.id.btn_journal);
 		btnEntr.setOnClickListener(btnListener);
 		btnList.setOnClickListener(btnListener);
